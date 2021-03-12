@@ -15,6 +15,7 @@ def main():
     print('Base water: %d ml' % baseWater)
     print('==================================')
 
+    # Update base amounts, if needed
     if input("Would you like to update the base values? (Y)es/(N)o ").lower() == 'y':
         while userUpdateBaseOption not in ('c', 'w'):
             userUpdateBaseOption = input("Would you like to update (C)offee or (W)ater? ").lower()
@@ -28,17 +29,18 @@ def main():
         print('Base water: %d ml' % baseWater)
         print('==================================')
 
+    # Input validation on option to calculate
     while userInputOption not in ('c', 'w'):
         userInputOption = input('Would you like to calculate (C)offee or (W)ater? ').lower()
 
+    # Calculate
     if userInputOption == 'c':
         userWater = int(input('Please enter the amount of water to be used (in milliliters): '))
         userCoffee = (baseCoffee * userWater) / baseWater
     elif userInputOption == 'w':
         userCoffee = int(input('Please enter the amount of coffee to be used (in grams): '))
         userWater = (baseWater * userCoffee) / baseCoffee
-
-    
+        
     print('Your ratio:')
     print('Coffee: %d\tWater: %d' % (userCoffee, userWater))
 
