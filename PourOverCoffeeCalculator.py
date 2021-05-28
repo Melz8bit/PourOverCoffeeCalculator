@@ -3,9 +3,9 @@
 def main():
     # Variables
     # Coffee in grams; water in ml
-    baseCoffee = 24
+    baseCoffee = 40
     userCoffee = 0    
-    baseWater = 709    
+    baseWater = 600    
     userWater = 0
     userInputOption = ''
     userUpdateBaseOption = ''
