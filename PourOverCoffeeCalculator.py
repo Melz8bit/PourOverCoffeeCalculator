@@ -1,5 +1,3 @@
-
-
 def main():
     # Variables
     # Coffee in grams; water in ml
