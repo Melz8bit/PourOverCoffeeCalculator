@@ -18,10 +18,12 @@ def buttonClick(event):
 window = tk.Tk() # Creates window
 window.title("Pour Over Coffee Calculator") # Sets window title
 window.resizable(0,0) # Disables maximize computer
-window.geometry("600x200") # Sets window size (w x h)
+window.geometry("500x200") # Sets window size (w x h)
 
 defaultValuesLabel = tk.Label(
-    text="Coffee: %d grams\n Water: %d ml" % (baseCoffee, baseWater)
+    text="Coffee: %d grams\n Water: %d ml" % (baseCoffee, baseWater),
+    padx=20,
+    pady=20
 )
 
 # Label on screen
@@ -35,7 +37,7 @@ enterCoffeeLabel = tk.Label(
 calculateCoffeeButton = tk.Button(
     text="Calculate Coffee",
     height=2,
-    width=12    
+    width=14
 )
 
 # Create textbox
