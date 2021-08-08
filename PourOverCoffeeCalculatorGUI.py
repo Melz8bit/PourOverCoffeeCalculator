@@ -2,40 +2,63 @@ import tkinter as tk
 
 # Variables
 # Coffee in grams; water in ml
-base_coffee = 40
-user_coffee = 0    
-base_water = 600    
+BASE_COFFEE = 40
+BASE_WATER = 600  
+user_coffee = 0      
 user_water = 0
 user_input_option = ''
 user_update_base_option = ''
 
-
-def buttonClick(event):
-    user_water = int(textEntry.get())
-    user_coffee = (base_coffee * user_water) / base_water
-    # print(user_coffee)
-
-def set_calc_selection():
-    pass
-    #user_input_option = user_calc_options.get()
-    #print(user_input_option)
-
+# tk Variables
+WINDOW_WIDTH = '500'
+WINDOW_HEIGHT = '250'
 window = tk.Tk() # Creates window
 window.title("Pour Over Coffee Calculator") # Sets window title
 window.resizable(0,0) # Disables maximize computer
-window.geometry("500x200") # Sets window size (w x h)
-
-# tk Variables
+window.geometry(WINDOW_WIDTH + 'x' + WINDOW_HEIGHT) # Sets window size (w x h)
 my_anchor = tk.W
-user_calc_var = tk.StringVar(window, 'melz')
+user_calc_var = tk.StringVar(window, 'empty')
+
+def calculate_amount(event):
+    user_entry_amount = int(text_entry.get())
+    if user_input_option == 'coffee':
+        measurement = 'g'
+        amount_needed = calculate_coffee(user_entry_amount, BASE_COFFEE, BASE_WATER)
+    elif user_input_option == 'water':
+        measurement = 'ml'
+        amount_needed = calculate_water(user_entry_amount, BASE_COFFEE, BASE_WATER)
+
+    tk.Label(
+        text='You will need %.2f %s of %s.' % (amount_needed, measurement, user_input_option)
+    ).place(x=5, y=defaultValuesLabel.winfo_height() + 180, anchor=my_anchor)
+
+def calculate_coffee(water_grams, BASE_COFFEE, BASE_WATER):
+    return (BASE_COFFEE * water_grams) / BASE_WATER
+
+def calculate_water(coffee_grams, BASE_COFFEE, BASE_WATER):
+    return (BASE_WATER * coffee_grams) / BASE_COFFEE    
+
+def set_calc_selection():
+    global user_input_option
+
+    if user_calc_var.get() == 'coffee':
+        enter_coffee_label.configure(text='Please enter the amount of water to be used (in mL):')
+        user_input_option = 'coffee'
+    elif user_calc_var.get() == 'water':
+        enter_coffee_label.configure(text='Please enter the amount of coffee to be used (in grams):')
+        user_input_option = 'water'
+    
+    enter_coffee_label.update()
+    text_entry.place(x=enter_coffee_label.winfo_width() + 10, y=defaultValuesLabel.winfo_height() + 95, anchor=my_anchor)
+    calculate_coffee_button.place(x=5, y=defaultValuesLabel.winfo_height() + 140, anchor=my_anchor)
 
 defaultValuesLabel = tk.Label(
-    text="Coffee: %d grams\nWater: %d ml" % (base_coffee, base_water),
+    text="Coffee: %d grams\nWater: %d ml" % (BASE_COFFEE, BASE_WATER),
     justify=tk.LEFT,
-    padx=5,
-    pady=5,
-    borderwidth=1,
-    relief='solid'
+    padx=0,
+    pady=5
+    #borderwidth=1,
+    #relief='solid'
 )
 defaultValuesLabel.place(x=5, y=5)
 defaultValuesLabel.update()
@@ -45,42 +68,38 @@ tk.Label(text='Choose which to calculate:').place(x=5, y=defaultValuesLabel.winf
 coffee_calc_select = tk.Radiobutton(window, 
     text='Coffee',
     value='coffee',
-    variable=user_calc_var
+    variable=user_calc_var,
+    command=set_calc_selection
 )
 
 water_calc_select = tk.Radiobutton(window, 
     text='Water',
     value='water',
-    variable=user_calc_var
+    variable=user_calc_var,
+    command=set_calc_selection
 )
-coffee_calc_select.place(x=5, y=defaultValuesLabel.winfo_height() + 45, anchor=my_anchor)
-water_calc_select.place(x=5, y=defaultValuesLabel.winfo_height() + 65, anchor=my_anchor)
+coffee_calc_select.place(x=15, y=defaultValuesLabel.winfo_height() + 45, anchor=my_anchor)
+water_calc_select.place(x=15, y=defaultValuesLabel.winfo_height() + 65, anchor=my_anchor)
 
-test = user_calc_var.get()
-print(test)
-
-# Label on screen
-enterCoffeeLabel = tk.Label(
-    text='Please enter the amount of %s to be used (in grams):' % user_input_option,
+# Label on screen  
+enter_coffee_label = tk.Label(
+    text='',
     justify=tk.LEFT
 )
-#enterCoffeeLabel.place(x=5, y=defaultValuesLabel.winfo_height() + 20, anchor=my_anchor)
-enterCoffeeLabel.update()
-""" print(enterCoffeeLabel.winfo_width())
-print(enterCoffeeLabel.winfo_height())
-print(enterCoffeeLabel.winfo_y()) """
+enter_coffee_label.place(x=5, y=defaultValuesLabel.winfo_height() + 95, anchor=my_anchor)
+enter_coffee_label.update()
 
 # Create textbox
-textEntry = tk.Entry(width=10)
-#textEntry.place(x=enterCoffeeLabel.winfo_width() + 10, y=defaultValuesLabel.winfo_height() + 20, anchor=my_anchor)
+text_entry = tk.Entry(width=10)
 
 # Create button
-calculateCoffeeButton = tk.Button(
+calculate_coffee_button = tk.Button(
     text="Calculate Coffee",
     height=2,
     width=14
 )
-# calculateCoffeeButton.pack(side=tk.BOTTOM)
+
+calculate_coffee_button.bind("<Button-1>", calculate_amount)
 
 """ # Puts widgets on screen
 defaultValuesLabel.pack()
@@ -88,7 +107,7 @@ enterCoffeeLabel.pack(side=tk.LEFT)
 textEntry.pack(side=tk.LEFT)
 calculateCoffeeButton.pack(side=tk.BOTTOM) """
 
-calculateCoffeeButton.bind("<Button-1>", buttonClick)
+
 
 # Displays window
 tk.mainloop()
