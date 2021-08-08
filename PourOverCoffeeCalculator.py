@@ -1,16 +1,41 @@
+
+def calculate_coffee(water_grams, base_coffee, base_water):
+    return (base_coffee * water_grams) / base_water
+
+def calculate_water(coffee_grams, base_coffee, base_water):
+    return (base_water * coffee_grams) / base_coffee
+
 def main():
     # Variables
     # Coffee in grams; water in ml
-    baseCoffee = 40
-    userCoffee = 0    
-    baseWater = 600    
+    BASE_COFFEE_POUR_OVER = 40
+    BASE_WATER_POUR_OVER = 600
+
+    BASE_COFFEE_COLD_BREW = 106
+    BASE_WATER_COLD_BREW = 980
+
+    base_coffee = 0
+    base_water = 0
+    userCoffee = 0            
     userWater = 0
+    brew_method = ''
     userInputOption = ''
     userUpdateBaseOption = ''
 
+    # Prompt for brew method
+    while brew_method not in ('p', 'c'):
+        brew_method = input("Would you like to calculate for (P)our over or (C)old brew method? ").lower()
+    
+    if brew_method == 'p':
+        base_coffee = BASE_COFFEE_POUR_OVER
+        base_water = BASE_WATER_POUR_OVER
+    elif brew_method == 'c':
+        base_coffee = BASE_COFFEE_COLD_BREW
+        base_water = BASE_WATER_COLD_BREW
+    
     print('==================================')
-    print('Base coffee: %d grams' % baseCoffee)
-    print('Base water: %d ml' % baseWater)
+    print('Base coffee: %d grams' % base_coffee)
+    print('Base water: %d ml' % base_water)
     print('==================================')
 
     # Update base amounts, if needed
@@ -19,15 +44,15 @@ def main():
             userUpdateBaseOption = input("Would you like to update (C)offee, (W)ater, or (B)oth? ").lower()
 
         if userUpdateBaseOption == 'c':
-            baseCoffee = int(input('Please enter base coffee amount in grams: '))
+            base_coffee = int(input('Please enter base coffee amount in grams: '))
         elif userUpdateBaseOption == 'w':
-            baseWater = int(input('Please enter base water amount in milliliters: '))
+            base_water = int(input('Please enter base water amount in milliliters: '))
         elif userUpdateBaseOption == 'b':
-            baseCoffee = int(input('Please enter base coffee amount in grams: '))
-            baseWater = int(input('Please enter base water amount in milliliters: '))            
+            base_coffee = int(input('Please enter base coffee amount in grams: '))
+            base_water = int(input('Please enter base water amount in milliliters: '))            
         
-        print('Base coffee: %d grams' % baseCoffee)
-        print('Base water: %d ml' % baseWater)
+        print('Base coffee: %d grams' % base_coffee)
+        print('Base water: %d ml' % base_water)
         print('==================================')
 
     # Input validation on option to calculate
@@ -37,10 +62,10 @@ def main():
     # Calculate
     if userInputOption == 'c':
         userWater = int(input('Please enter the amount of water to be used (in milliliters): '))
-        userCoffee = (baseCoffee * userWater) / baseWater
+        userCoffee = calculate_coffee(userWater, base_coffee, base_water)
     elif userInputOption == 'w':
         userCoffee = int(input('Please enter the amount of coffee to be used (in grams): '))
-        userWater = (baseWater * userCoffee) / baseCoffee
+        userWater = calculate_water(userCoffee, base_coffee, base_water)
         
     print('Your ratio:')
     print('Coffee: %d\tWater: %d' % (userCoffee, userWater))
