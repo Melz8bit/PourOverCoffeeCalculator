@@ -8,34 +8,33 @@ def calculate_water(coffee_grams, base_coffee, base_water):
 def main():
     # Variables
     # Coffee in grams; water in ml
-    BASE_COFFEE_POUR_OVER = 40
-    BASE_WATER_POUR_OVER = 600
+    base_coffee_pour_over: float = 40.0
+    base_water_pour_over:float = 600.0
+    base_coffee_cold_brew: float = 100.0
+    base_water_cold_brew: float = 980.0
 
-    BASE_COFFEE_COLD_BREW = 106
-    BASE_WATER_COLD_BREW = 980
-
-    base_coffee = 0
-    base_water = 0
-    userCoffee = 0            
-    userWater = 0
-    brew_method = ''
-    userInputOption = ''
-    userUpdateBaseOption = ''
+    base_coffee: float = 0.0
+    base_water: float = 0.0
+    userCoffee: float = 0.0          
+    userWater:float = 0.0
+    brew_method: chr = ''
+    userInputOption: chr = ''
+    userUpdateBaseOption: chr = ''
 
     # Prompt for brew method
     while brew_method not in ('p', 'c'):
         brew_method = input("Would you like to calculate for (P)our over or (C)old brew method? ").lower()
     
     if brew_method == 'p':
-        base_coffee = BASE_COFFEE_POUR_OVER
-        base_water = BASE_WATER_POUR_OVER
+        base_coffee = base_coffee_pour_over
+        base_water = base_water_pour_over
     elif brew_method == 'c':
-        base_coffee = BASE_COFFEE_COLD_BREW
-        base_water = BASE_WATER_COLD_BREW
+        base_coffee = base_coffee_cold_brew
+        base_water = base_water_cold_brew
     
     print('==================================')
-    print('Base coffee: %d grams' % base_coffee)
-    print('Base water: %d ml' % base_water)
+    print(f'Base coffee: {base_coffee} grams')
+    print(f'Base water: {base_water} ml')
     print('==================================')
 
     # Update base amounts, if needed
@@ -51,8 +50,8 @@ def main():
             base_coffee = int(input('Please enter base coffee amount in grams: '))
             base_water = int(input('Please enter base water amount in milliliters: '))            
         
-        print('Base coffee: %d grams' % base_coffee)
-        print('Base water: %d ml' % base_water)
+        print(f'Base coffee: {base_coffee} grams')
+        print(f'Base water: {base_water} ml')
         print('==================================')
 
     # Input validation on option to calculate
@@ -68,7 +67,7 @@ def main():
         userWater = calculate_water(userCoffee, base_coffee, base_water)
         
     print('Your ratio:')
-    print('Coffee: %d\tWater: %d' % (userCoffee, userWater))
+    print(f'Coffee: {userCoffee}\tWater: {userWater}')
 
 
 if __name__ == "__main__":
